@@ -211,9 +211,9 @@ p {
 /* Fidget selection area */
 .fidget-selection {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  justify-content: center;
+  flex-wrap: wrap; /* Allows items to wrap to next line if needed */
+  gap: 1rem; /* Maintains consistent spacing between items */
 }
 
 .fidget-icon {
