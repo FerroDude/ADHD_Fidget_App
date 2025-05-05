@@ -85,7 +85,7 @@
 }
 
 .placeholder-fidget-description {
-  color: var(--secondary);
+  color: var(--accent);
   text-align: center;
   z-index: 1; /* Ensure text is above the border */
   font-size: 0.9rem;
