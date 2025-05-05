@@ -1,0 +1,60 @@
+.bubble-wrap-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.bubble-grid {
+  display: grid;
+  /* Explicitly set grid to 8×8 */
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  gap: 8px;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1/1;
+  margin: 0 auto;
+}
+
+.bubble {
+  border-radius: 50%;
+  cursor: pointer;
+  aspect-ratio: 1/1;
+  position: relative;
+  overflow: hidden;
+  background-color: #4a90e2;
+  border: 2px solid #357abd;
+  box-shadow: 0 2px 4px var(--shadow);
+}
+
+.bubble::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 25%;
+  width: 25%;
+  height: 25%;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.bubble.popped {
+  cursor: default;
+  background-color: #a0c4ff;
+  border-color: #6699cc;
+}
+
+@media (max-width: 768px) {
+  .bubble-grid {
+    gap: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bubble-grid {
+    gap: 4px;
+  }
+}

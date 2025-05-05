@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
 import ThemeToggle from './components/ThemeToggle/ThemeToggle.jsx';
+import BubbleWrapFidget from './components/BubbleWrapFidget/BubbleWrapFidget.jsx';
 import PlaceholderFidgetOne from './components/placeholdersFidgets/PlaceholderFidgetOne';
 import PlaceholderFidgetTwo from './components/placeholdersFidgets/PlaceholderFidgetTwo';
 import PlaceholderFidgetThree from './components/placeholdersFidgets/PlaceholderFidgetThree';
@@ -31,7 +32,7 @@ function App() {
   const renderActiveFidget = () => {
     switch (activeFidget) {
       case 1:
-        return <PlaceholderFidgetOne />;
+        return <BubbleWrapFidget />;
       case 2:
         return <PlaceholderFidgetTwo />;
       case 3:

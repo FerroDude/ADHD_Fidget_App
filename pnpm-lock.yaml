@@ -11,6 +11,9 @@ importers:
       '@fontsource/lexend':
         specifier: ^5.2.7
         version: 5.2.7
+      framer-motion:
+        specifier: ^12.9.4
+        version: 12.9.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react:
         specifier: ^19.0.0
         version: 19.1.0
@@ -771,6 +774,20 @@ packages:
     resolution: {integrity: sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==}
     engines: {node: '>= 0.6'}
 
+  framer-motion@12.9.4:
+    resolution: {integrity: sha512-yaeGDmGQ3eCQEwZ95/pRQMaSh/Q4E2CK6JYOclG/PdjyQad0MULJ+JFVV8911Fl5a6tF6o0wgW8Dpl5Qx4Adjg==}
+    peerDependencies:
+      '@emotion/is-prop-valid': '*'
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@emotion/is-prop-valid':
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+
   fresh@2.0.0:
     resolution: {integrity: sha512-Rx/WycZ60HOaqLKAi6cHRKKI7zxWbJ31MhntmtwMoaTeF7XFH9hhBp8vITaMidfljRQ6eYWCKkaTK+ykVJHP2A==}
     engines: {node: '>= 0.8'}
@@ -933,6 +950,12 @@ packages:
 
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
+
+  motion-dom@12.9.4:
+    resolution: {integrity: sha512-25TWkQPj5I18m+qVjXGtCsxboY11DaRC5HMjd29tHKExazW4Zf4XtAagBdLpyKsVuAxEQ6cx5/E4AB21PFpLnQ==}
+
+  motion-utils@12.9.4:
+    resolution: {integrity: sha512-BW3I65zeM76CMsfh3kHid9ansEJk9Qvl+K5cu4DVHKGsI52n76OJ4z2CUJUV+Mn3uEP9k1JJA3tClG0ggSrRcg==}
 
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
@@ -1135,6 +1158,9 @@ packages:
   toidentifier@1.0.1:
     resolution: {integrity: sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==}
     engines: {node: '>=0.6'}
+
+  tslib@2.8.1:
+    resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
@@ -1943,6 +1969,15 @@ snapshots:
 
   forwarded@0.2.0: {}
 
+  framer-motion@12.9.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      motion-dom: 12.9.4
+      motion-utils: 12.9.4
+      tslib: 2.8.1
+    optionalDependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+
   fresh@2.0.0: {}
 
   fsevents@2.3.3:
@@ -2075,6 +2110,12 @@ snapshots:
   minimatch@3.1.2:
     dependencies:
       brace-expansion: 1.1.11
+
+  motion-dom@12.9.4:
+    dependencies:
+      motion-utils: 12.9.4
+
+  motion-utils@12.9.4: {}
 
   ms@2.1.3: {}
 
@@ -2293,6 +2334,8 @@ snapshots:
       picomatch: 4.0.2
 
   toidentifier@1.0.1: {}
+
+  tslib@2.8.1: {}
 
   type-check@0.4.0:
     dependencies:
