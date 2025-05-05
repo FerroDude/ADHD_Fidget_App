@@ -4,8 +4,8 @@ import './bubblewrapfidget.css';
 
 const BubbleWrapFidget = () => {
   // Explicitly set grid dimensions to 8×8
-  const rows = 8;
-  const cols = 8;
+  const rows = 7;
+  const cols = 7;
   const totalBubbles = rows * cols;
 
   const [poppedBubbles, setPoppedBubbles] = useState(new Set());
