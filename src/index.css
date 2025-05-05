@@ -1,0 +1,249 @@
+/*
+ * Modern CSS Reset 2025
+ * A practical baseline for better web development
+ */
+
+/* 1. More intuitive box-sizing model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Lexend', sans-serif;
+}
+
+/* 3. Enable keyword animations */
+html {
+  interpolate-size: allow-keywords;
+}
+
+body {
+  /* 4. Add accessible line-height */
+  line-height: 1.5;
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+/* 10. Create a root stacking context */
+#root,
+#__next {
+  isolation: isolate;
+}
+
+/* Typography scale */
+h1 {
+  font-family: 'Lexend', sans-serif;
+  font-weight: 700;
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-family: 'Lexend', sans-serif;
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+h3 {
+  font-family: 'Lexend', sans-serif;
+  font-weight: 500;
+  font-size: 1.75rem;
+}
+
+p {
+  font-family: 'Lexend', sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.text-light {
+  font-weight: 300;
+}
+
+.text-medium {
+  font-weight: 500;
+}
+
+.text-bold {
+  font-weight: 700;
+}
+
+:root {
+  /* Light mode variables by default */
+  --background: #e6f3ff; /* Soft light blue - calming and non-distracting */
+  --text: #1a365d; /* Dark navy - strong contrast for readability */
+  --secondary-bg: #ffffff; /* Light sand - neutral alternative */
+  --accent: #4a9d9a; /* Muted teal - provides visual interest without overwhelming */
+  --secondary: #9caf88; /* Sage green - enhances focus without overstimulation */
+  --card-bg: #ffffff; /* Pure white for component backgrounds */
+  --border: rgba(0, 0, 0, 0.1); /* Subtle borders */
+  --shadow: rgba(0, 0, 0, 0.05); /* Gentle shadows */
+}
+
+html[data-theme='dark'] {
+  --background: #172a3a; /* Deep navy blue - darker than black but not harsh */
+  --text: #e8eff4; /* Soft off-white - reduces eye strain vs pure white */
+  --secondary-bg: #263a47; /* Dark slate - provides subtle variation */
+  --accent: #48a9a6; /* Medium teal - visible without being jarring */
+  --secondary: #7d9d8c; /* Muted sage - maintains the calming green influence */
+  --card-bg: #1f3646; /* Slightly lighter than background for component contrast */
+  --border: rgba(255, 255, 255, 0.1);
+  --shadow: rgba(0, 0, 0, 0.2);
+}
+
+/* Base styles */
+body {
+  background-color: var(--background);
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  font-family: 'Lexend', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Typography */
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: var(--text);
+}
+
+p {
+  margin-bottom: 1.5rem;
+  text-wrap: pretty;
+}
+
+/* App components */
+.app-description {
+  background-color: var(--secondary-bg);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.app-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+}
+
+.app-header h1 {
+  text-align: center;
+  margin: 0;
+}
+
+.app-header h2 {
+  text-align: center;
+  margin: 0;
+  font-weight: 400;
+  font-style: italic;
+  padding-top: 0.5rem;
+  font-size: 1.15rem;
+  color: var(--text);
+}
+
+/* Fidget selection area */
+.fidget-selection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.fidget-icon {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 6px var(--shadow);
+}
+
+.fidget-icon:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px var(--shadow);
+}
+
+.fidget-icon.active {
+  border: 2px solid var(--accent);
+}
+
+/* Focused fidget area */
+.focused-fidget {
+  border-radius: 12px;
+  padding: 2rem;
+
+  min-height: 400px;
+}
