@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import './BubbleWrapFidget.css';
+import './bubblewrapfidget.css';
 
 const BubbleWrapFidget = () => {
   // Explicitly set grid dimensions to 8×8
