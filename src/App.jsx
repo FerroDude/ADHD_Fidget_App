@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
 import ThemeToggle from './components/ThemeToggle/ThemeToggle.jsx';
 import PlaceholderFidgetOne from './components/placeholdersFidgets/PlaceholderFidgetOne';
@@ -9,6 +9,23 @@ import PlaceholderFidgetFive from './components/placeholdersFidgets/PlaceholderF
 
 function App() {
   const [activeFidget, setActiveFidget] = useState(1);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check for mobile screen size
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    // Initial check
+    checkMobile();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', checkMobile);
+
+    // Clean up
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Render active fidget based on state
   const renderActiveFidget = () => {
@@ -43,7 +60,7 @@ function App() {
         </header>
 
         <main>
-          {/* Placeholder for the fidget selector */}
+          {/* Fidget selector */}
           <div className="fidget-selection">
             {[1, 2, 3, 4, 5].map((num) => (
               <div
@@ -62,7 +79,9 @@ function App() {
           </div>
 
           {/* Focused fidget display area */}
-          <div className="focused-fidget">{renderActiveFidget()}</div>
+          <div className={`focused-fidget ${isMobile ? 'mobile-view' : ''}`}>
+            {renderActiveFidget()}
+          </div>
         </main>
       </div>
     </ThemeProvider>

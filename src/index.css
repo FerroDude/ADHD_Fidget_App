@@ -208,12 +208,13 @@ p {
   color: var(--text);
 }
 
-/* Fidget selection area */
+/* Base styles for fidget selection (desktop first) */
 .fidget-selection {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap; /* Allows items to wrap to next line if needed */
-  gap: 1rem; /* Maintains consistent spacing between items */
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .fidget-icon {
@@ -229,6 +230,8 @@ p {
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   box-shadow: 0 4px 6px var(--shadow);
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
 .fidget-icon:hover {
@@ -240,10 +243,61 @@ p {
   border: 2px solid var(--accent);
 }
 
-/* Focused fidget area */
+/* Focused fidget container */
 .focused-fidget {
   border-radius: 12px;
   padding: 2rem;
 
   min-height: 400px;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .fidget-selection {
+    gap: 0.5rem; /* Tighter spacing on mobile */
+    margin-bottom: 1rem;
+  }
+
+  .fidget-icon {
+    padding: 0.75rem;
+    width: 60px; /* Smaller width */
+    height: 60px; /* Smaller height */
+    font-size: 1rem;
+  }
+
+  /* Make active fidget slightly larger for better visibility */
+  .fidget-icon.active {
+    width: 70px;
+    height: 70px;
+    border-width: 3px;
+  }
+
+  /* Optimize the focused fidget for mobile */
+  .focused-fidget {
+    padding: 1rem;
+    min-height: 350px; /* Allow a bit more space */
+  }
+
+  /* Make the placeholder fidget fill more of the screen */
+  .placeholder-fidget-container {
+    max-width: 100%; /* Allow it to fill the container */
+  }
+}
+
+/* Small mobile screens */
+@media (max-width: 480px) {
+  .fidget-icon {
+    width: 50px; /* Even smaller on very small screens */
+    height: 50px;
+    padding: 0.5rem;
+  }
+
+  .fidget-icon.active {
+    width: 60px;
+    height: 60px;
+  }
+
+  .focused-fidget {
+    padding: 0.75rem;
+  }
 }
