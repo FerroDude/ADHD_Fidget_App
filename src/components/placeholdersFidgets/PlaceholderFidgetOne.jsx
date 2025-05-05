@@ -1,5 +1,5 @@
 import React from 'react';
-import './PlaceholderFidget.css';
+import './placeholderFidget.css';
 
 const PlaceholderFidgetOne = () => {
   return (
