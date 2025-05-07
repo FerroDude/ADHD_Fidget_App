@@ -6,31 +6,75 @@ const BubbleWrapFidget = () => {
   const rows = 7;
   const cols = 7;
   const totalBubbles = rows * cols;
+
   const [poppedBubbles, setPoppedBubbles] = useState(new Set());
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [vibrationEnabled, setVibrationEnabled] = useState(true);
+
+  // Refs
   const isDragging = useRef(false);
   const containerRef = useRef(null);
   const bubblesRef = useRef(Array(totalBubbles).fill(null));
+  const popSoundRef = useRef(null);
+  // Add a ref to track popped bubbles immediately (not waiting for state update)
+  const poppedBubblesRef = useRef(new Set());
 
+  // Initialize audio on first user interaction
+  const initAudio = () => {
+    if (!popSoundRef.current) {
+      popSoundRef.current = new Audio('/pop.mp3');
+      popSoundRef.current.load();
+    }
+  };
+
+  // Auto reset bubbles when all popped
   useEffect(() => {
     if (poppedBubbles.size === totalBubbles) {
-      const timer = setTimeout(() => setPoppedBubbles(new Set()), 300);
+      const timer = setTimeout(() => {
+        poppedBubblesRef.current = new Set(); // Reset ref too
+        setPoppedBubbles(new Set());
+      }, 300);
       return () => clearTimeout(timer);
     }
   }, [poppedBubbles, totalBubbles]);
 
-  // Helper to get pointer/touch coordinates
+  const popBubble = (index) => {
+    // Check if already popped using the ref
+    if (poppedBubblesRef.current.has(index)) return;
+
+    // Update ref immediately (synchronous)
+    poppedBubblesRef.current.add(index);
+
+    // Update state (asynchronous)
+    setPoppedBubbles(new Set(poppedBubblesRef.current));
+
+    if (soundEnabled) {
+      initAudio();
+      if (popSoundRef.current) {
+        const soundClone = popSoundRef.current.cloneNode();
+        soundClone.volume = 0.25;
+        soundClone.play().catch((error) => {
+          console.error('Audio playback error:', error);
+        });
+      }
+    }
+
+    if (
+      vibrationEnabled &&
+      'vibrate' in navigator &&
+      /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+    ) {
+      navigator.vibrate(40);
+    }
+  };
+
   const getCoords = (e) => {
-    if (e.touches && e.touches.length > 0) {
+    if (e.touches && e.touches.length) {
       return { x: e.touches[0].clientX, y: e.touches[0].clientY };
     }
     return { x: e.clientX, y: e.clientY };
   };
 
-  const popBubble = (index) => {
-    setPoppedBubbles((prev) => new Set([...prev, index]));
-  };
-
-  // DRAG LOGIC
   const handleStart = (e) => {
     isDragging.current = true;
     document.addEventListener('pointermove', handleMove);
@@ -42,7 +86,6 @@ const BubbleWrapFidget = () => {
 
   const handleMove = (e) => {
     if (!isDragging.current) return;
-    // Prevent scrolling on touch devices
     if (e.cancelable) e.preventDefault();
 
     const { x, y } = getCoords(e);
@@ -52,10 +95,14 @@ const BubbleWrapFidget = () => {
     const relY = y - containerRect.top;
 
     bubblesRef.current.forEach((bubbleEl, index) => {
-      if (!bubbleEl || poppedBubbles.has(index)) return;
+      if (!bubbleEl) return;
+      // Check using the ref for immediate feedback
+      if (poppedBubblesRef.current.has(index)) return;
+
       const bubbleRect = bubbleEl.getBoundingClientRect();
       const bubbleX = bubbleRect.left - containerRect.left;
       const bubbleY = bubbleRect.top - containerRect.top;
+
       if (
         relX >= bubbleX &&
         relX <= bubbleX + bubbleRect.width &&
@@ -87,6 +134,30 @@ const BubbleWrapFidget = () => {
         WebkitUserSelect: 'none',
       }}
     >
+      <div className="fidget-toggles">
+        <button
+          className={`toggle-btn${soundEnabled ? ' active' : ''}`}
+          aria-label={soundEnabled ? 'Disable pop sound' : 'Enable pop sound'}
+          onClick={() => {
+            initAudio(); // Initialize audio on first click
+            setSoundEnabled((v) => !v);
+          }}
+          type="button"
+        >
+          {soundEnabled ? '🔊' : '🔇'}
+        </button>
+        <button
+          className={`toggle-btn${vibrationEnabled ? ' active' : ''}`}
+          aria-label={
+            vibrationEnabled ? 'Disable vibration' : 'Enable vibration'
+          }
+          onClick={() => setVibrationEnabled((v) => !v)}
+          type="button"
+        >
+          {vibrationEnabled ? '📳' : '📴'}
+        </button>
+      </div>
+
       <div className="bubble-grid">
         {Array.from({ length: totalBubbles }, (_, index) => (
           <motion.div
@@ -101,10 +172,7 @@ const BubbleWrapFidget = () => {
                     opacity: 0.7,
                     transition: { type: 'spring', stiffness: 500, damping: 30 },
                   }
-                : {
-                    scale: 1,
-                    opacity: 1,
-                  }
+                : { scale: 1, opacity: 1 }
             }
           />
         ))}
