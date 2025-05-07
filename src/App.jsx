@@ -53,9 +53,8 @@ function App() {
           <div className="app-header-content">
             <h1>ADHD Fidgets</h1>
             <h2>
-              {/* Science-based fidget tools to help improve focus and
-              concentration. */}
-              Consegui o trabalho na askblue
+              Science-based fidget tools to help improve focus and
+              concentration.
             </h2>
           </div>
           <ThemeToggle />
