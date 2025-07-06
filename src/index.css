@@ -275,6 +275,7 @@ main {
 @media (max-width: 768px) {
   .app-container {
     padding: 1.5rem;
+    padding-bottom: 3rem; /* Extra space at bottom for mobile */
     min-height: 100vh; /* Fallback for older browsers */
     min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
     display: flex;
@@ -303,6 +304,7 @@ main {
   /* Optimize the focused fidget for mobile */
   .focused-fidget {
     padding: 1rem;
+    padding-bottom: 2rem; /* Extra bottom padding for mobile */
     min-height: 350px; /* Allow a bit more space */
     flex: 1; /* Allow it to grow to fill available space */
   }
@@ -317,6 +319,7 @@ main {
 @media (max-width: 480px) {
   .app-container {
     padding: 1rem;
+    padding-bottom: 2.5rem; /* Extra space at bottom for small mobile */
     min-height: 100vh; /* Ensure full viewport height on mobile */
     min-height: 100dvh; /* Use dynamic viewport height for better mobile support */
     display: flex;
@@ -336,6 +339,7 @@ main {
 
   .focused-fidget {
     padding: 0.75rem;
+    padding-bottom: 1.5rem; /* Extra bottom padding for small mobile */
     flex: 1; /* Allow it to grow to fill available space */
   }
 }
