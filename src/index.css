@@ -76,6 +76,7 @@ h6 {
 #root,
 #__next {
   isolation: isolate;
+  height: 100%;
 }
 
 /* Typography scale */
@@ -155,11 +156,19 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+#root {
+  min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height for mobile */
+}
+
 .app-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
   min-height: 100vh; /* Ensure container fills viewport height */
+  min-height: 100dvh; /* Dynamic viewport height for mobile */
+  display: flex;
+  flex-direction: column;
 }
 
 /* Typography */
@@ -183,6 +192,12 @@ p {
 }
 
 /* App components */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .app-description {
   background-color: var(--secondary-bg);
   padding: 1.5rem;
@@ -252,8 +267,8 @@ p {
 .focused-fidget {
   border-radius: 12px;
   padding: 2rem;
-
   min-height: 400px;
+  flex: 1; /* Allow it to grow to fill available space */
 }
 
 /* Mobile responsive styles */
@@ -262,6 +277,8 @@ p {
     padding: 1.5rem;
     min-height: 100vh; /* Fallback for older browsers */
     min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
+    display: flex;
+    flex-direction: column;
   }
 
   .fidget-selection {
@@ -287,6 +304,7 @@ p {
   .focused-fidget {
     padding: 1rem;
     min-height: 350px; /* Allow a bit more space */
+    flex: 1; /* Allow it to grow to fill available space */
   }
 
   /* Make the placeholder fidget fill more of the screen */
@@ -301,6 +319,8 @@ p {
     padding: 1rem;
     min-height: 100vh; /* Ensure full viewport height on mobile */
     min-height: 100dvh; /* Use dynamic viewport height for better mobile support */
+    display: flex;
+    flex-direction: column;
   }
 
   .fidget-icon {
@@ -316,5 +336,6 @@ p {
 
   .focused-fidget {
     padding: 0.75rem;
+    flex: 1; /* Allow it to grow to fill available space */
   }
 }
