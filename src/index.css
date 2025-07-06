@@ -139,6 +139,11 @@ html[data-theme='dark'] {
 }
 
 /* Base styles */
+html,
+body {
+  height: 100%;
+}
+
 body {
   background-color: var(--background);
   color: var(--text);
@@ -154,6 +159,7 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+  min-height: 100vh; /* Ensure container fills viewport height */
 }
 
 /* Typography */
@@ -214,7 +220,6 @@ p {
   justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-bottom: 2rem;
 }
 
 .fidget-icon {
@@ -253,6 +258,12 @@ p {
 
 /* Mobile responsive styles */
 @media (max-width: 768px) {
+  .app-container {
+    padding: 1.5rem;
+    min-height: 100vh; /* Fallback for older browsers */
+    min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
+  }
+
   .fidget-selection {
     gap: 0.5rem; /* Tighter spacing on mobile */
     margin-bottom: 1rem;
@@ -286,6 +297,12 @@ p {
 
 /* Small mobile screens */
 @media (max-width: 480px) {
+  .app-container {
+    padding: 1rem;
+    min-height: 100vh; /* Ensure full viewport height on mobile */
+    min-height: 100dvh; /* Use dynamic viewport height for better mobile support */
+  }
+
   .fidget-icon {
     width: 50px; /* Even smaller on very small screens */
     height: 50px;
