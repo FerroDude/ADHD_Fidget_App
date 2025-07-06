@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import {
+  SoundOnIcon,
+  SoundOffIcon,
+  VibrationOnIcon,
+  VibrationOffIcon,
+} from '../Icons/Icons';
 import './bubblewrapfidget.css';
 
 const BubbleWrapFidget = () => {
@@ -144,7 +150,11 @@ const BubbleWrapFidget = () => {
           }}
           type="button"
         >
-          {soundEnabled ? '🔊' : '🔇'}
+          {soundEnabled ? (
+            <SoundOnIcon size={18} />
+          ) : (
+            <SoundOffIcon size={18} />
+          )}
         </button>
         <button
           className={`toggle-btn${vibrationEnabled ? ' active' : ''}`}
@@ -154,7 +164,11 @@ const BubbleWrapFidget = () => {
           onClick={() => setVibrationEnabled((v) => !v)}
           type="button"
         >
-          {vibrationEnabled ? '📳' : '📴'}
+          {vibrationEnabled ? (
+            <VibrationOnIcon size={18} />
+          ) : (
+            <VibrationOffIcon size={18} />
+          )}
         </button>
       </div>
 
