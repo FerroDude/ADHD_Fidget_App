@@ -198,45 +198,7 @@ main {
   flex-direction: column;
 }
 
-/* Desktop layout with side navigation */
-@media (min-width: 769px) {
-  main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .fidget-selection {
-    flex-direction: column;
-    position: fixed;
-    left: max(2rem, calc(50% - 600px - 220px));
-    top: 50%;
-    transform: translateY(-50%);
-    gap: 1rem;
-    margin-bottom: 0;
-    width: 200px;
-    z-index: 10;
-  }
-  
-  .focused-fidget {
-    width: 100%;
-    max-width: 600px;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .fidget-icon {
-    width: 100%;
-    height: 60px;
-    justify-content: flex-start;
-    padding-left: 1rem;
-    border-radius: 8px;
-  }
-  
-  .fidget-icon:hover {
-    transform: translateX(5px);
-  }
-}
+
 
 .app-description {
   background-color: var(--secondary-bg);
