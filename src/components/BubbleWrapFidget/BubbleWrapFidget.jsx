@@ -37,12 +37,17 @@ const BubbleWrapFidget = () => {
   useEffect(() => {
     if (poppedBubbles.size === totalBubbles) {
       const timer = setTimeout(() => {
-        poppedBubblesRef.current = new Set(); // Reset ref too
-        setPoppedBubbles(new Set());
+        resetBubbles();
       }, 300);
       return () => clearTimeout(timer);
     }
   }, [poppedBubbles, totalBubbles]);
+
+  // Manual reset function
+  const resetBubbles = () => {
+    poppedBubblesRef.current = new Set();
+    setPoppedBubbles(new Set());
+  };
 
   const popBubble = (index) => {
     // Check if already popped using the ref
@@ -191,6 +196,15 @@ const BubbleWrapFidget = () => {
           />
         ))}
       </div>
+
+      <button
+        className="reset-button"
+        onClick={resetBubbles}
+        aria-label="Reset all bubbles"
+        type="button"
+      >
+        Reset Bubbles
+      </button>
     </div>
   );
 };
