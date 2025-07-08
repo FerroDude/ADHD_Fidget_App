@@ -1,0 +1,261 @@
+/* Stress Ball Fidget Styles */
+.stress-ball-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  touch-action: none;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Pressure rings for visual feedback */
+.pressure-rings {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.pressure-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid var(--primary-color);
+  animation: pulse-ring 1s ease-out infinite;
+}
+
+.pressure-ring.ring-1 {
+  width: 320px;
+  height: 320px;
+  opacity: 0.6;
+  animation-delay: 0s;
+}
+
+.pressure-ring.ring-2 {
+  width: 350px;
+  height: 350px;
+  opacity: 0.4;
+  animation-delay: 0.2s;
+}
+
+.pressure-ring.ring-3 {
+  width: 380px;
+  height: 380px;
+  opacity: 0.2;
+  animation-delay: 0.4s;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* Three.js container */
+.threejs-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+/* Three.js canvas styling */
+.stress-ball-canvas {
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+  outline: none;
+  border: none;
+  /* Force perfect square aspect ratio */
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  /* Remove all box-shadow borders */
+}
+
+.stress-ball-canvas:hover {
+  /* Remove hover box-shadow */
+}
+
+.stress-ball-canvas.pressed {
+  /* Remove pressed box-shadow */
+}
+
+.stress-ball-canvas.holding {
+  /* Remove holding box-shadow */
+}
+
+/* Pressure indicator */
+.pressure-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+  z-index: 3;
+}
+
+.pressure-bar {
+  width: 200px;
+  height: 8px;
+  background: var(--background-secondary);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.pressure-fill {
+  height: 100%;
+  background: linear-gradient(90deg, 
+    var(--primary-color) 0%, 
+    var(--accent-color) 50%, 
+    #ff6b6b 100%);
+  border-radius: 4px;
+  transition: width 0.1s ease;
+}
+
+.pressure-text {
+  display: none;
+}
+
+/* Focus states for accessibility */
+.stress-ball-canvas:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 4px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .stress-ball-container {
+    gap: 3px;
+    padding: 8px;
+  }
+  
+  .stress-ball-canvas {
+    width: 400px;
+    height: 400px;
+    aspect-ratio: 1 / 1;
+  }
+  
+  .pressure-ring.ring-1 {
+    width: 420px;
+    height: 420px;
+  }
+  
+  .pressure-ring.ring-2 {
+    width: 450px;
+    height: 450px;
+  }
+  
+  .pressure-ring.ring-3 {
+    width: 480px;
+    height: 480px;
+  }
+  
+  .pressure-bar {
+    width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stress-ball-container {
+    gap: 2px;
+    padding: 5px;
+  }
+  
+  .stress-ball-canvas {
+    width: 350px;
+    height: 350px;
+    aspect-ratio: 1 / 1;
+  }
+  
+  .pressure-ring.ring-1 {
+    width: 370px;
+    height: 370px;
+  }
+  
+  .pressure-ring.ring-2 {
+    width: 400px;
+    height: 400px;
+  }
+  
+  .pressure-ring.ring-3 {
+    width: 430px;
+    height: 430px;
+  }
+  
+  .pressure-bar {
+    width: 120px;
+    height: 6px;
+  }
+  
+  .pressure-text {
+    font-size: 11px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .stress-ball-canvas {
+    /* No box-shadow in dark mode either */
+  }
+  
+  .stress-ball-canvas:hover {
+    /* No hover box-shadow in dark mode */
+  }
+  
+  .stress-ball-canvas.pressed {
+    /* No pressed box-shadow in dark mode */
+  }
+  
+  .stress-ball-canvas.holding {
+    /* No holding box-shadow in dark mode */
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .stress-ball-canvas {
+    border: 2px solid var(--text-primary);
+  }
+  
+  .pressure-bar {
+    border: 2px solid var(--text-primary);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .pressure-ring {
+    animation: none;
+  }
+  
+  .stress-ball-canvas {
+    transition: none;
+  }
+  
+  .pressure-fill {
+    transition: none;
+  }
+} 

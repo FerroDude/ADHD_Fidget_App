@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
 import ThemeToggle from './components/ThemeToggle/ThemeToggle.jsx';
 import BubbleWrapFidget from './components/BubbleWrapFidget/BubbleWrapFidget.jsx';
+import StressBallFidget from './components/StressBallFidget/StressBallFidget.jsx';
 import PlaceholderFidgetOne from './components/placeholdersFidgets/PlaceholderFidgetOne';
-import PlaceholderFidgetTwo from './components/placeholdersFidgets/PlaceholderFidgetTwo';
 import PlaceholderFidgetThree from './components/placeholdersFidgets/PlaceholderFidgetThree';
 import PlaceholderFidgetFour from './components/placeholdersFidgets/PlaceholderFidgetFour';
 import PlaceholderFidgetFive from './components/placeholdersFidgets/PlaceholderFidgetFive';
@@ -34,7 +34,7 @@ function App() {
       case 1:
         return <BubbleWrapFidget />;
       case 2:
-        return <PlaceholderFidgetTwo />;
+        return <StressBallFidget />;
       case 3:
         return <PlaceholderFidgetThree />;
       case 4:
