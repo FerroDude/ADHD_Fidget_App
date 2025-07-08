@@ -16,6 +16,11 @@ const BubbleWrapFidget = () => {
   const [poppedBubbles, setPoppedBubbles] = useState(new Set());
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [vibrationEnabled, setVibrationEnabled] = useState(true);
+  const [audioInitialized, setAudioInitialized] = useState(false);
+  
+  // Pre-initialize audio context and haptic feedback for iOS
+  const audioContextRef = useRef(null);
+  const isIOSRef = useRef(/iPad|iPhone|iPod/.test(navigator.userAgent));
 
   // Refs
   const isDragging = useRef(false);
@@ -27,9 +32,35 @@ const BubbleWrapFidget = () => {
 
   // Initialize audio on first user interaction
   const initAudio = () => {
-    if (!popSoundRef.current) {
+    if (!popSoundRef.current || !audioInitialized) {
       popSoundRef.current = new Audio('/pop.mp3');
-      popSoundRef.current.load();
+      popSoundRef.current.preload = 'auto';
+      popSoundRef.current.volume = 0.25;
+      
+      // Initialize audio context for haptic feedback (iOS)
+      if (isIOSRef.current && typeof window !== 'undefined' && window.AudioContext) {
+        try {
+          audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
+          if (audioContextRef.current.state === 'suspended') {
+            audioContextRef.current.resume().catch(console.error);
+          }
+        } catch (error) {
+          console.error('AudioContext initialization failed:', error);
+        }
+      }
+      
+      if (isIOSRef.current) {
+        // For iOS, we need to play a silent audio first to unlock the audio context
+        popSoundRef.current.muted = true;
+        popSoundRef.current.play().then(() => {
+          popSoundRef.current.muted = false;
+          popSoundRef.current.currentTime = 0;
+          setAudioInitialized(true);
+        }).catch(console.error);
+      } else {
+        popSoundRef.current.load();
+        setAudioInitialized(true);
+      }
     }
   };
 
@@ -59,23 +90,43 @@ const BubbleWrapFidget = () => {
     // Update state (asynchronous)
     setPoppedBubbles(new Set(poppedBubblesRef.current));
 
-    if (soundEnabled) {
-      initAudio();
-      if (popSoundRef.current) {
-        const soundClone = popSoundRef.current.cloneNode();
-        soundClone.volume = 0.25;
-        soundClone.play().catch((error) => {
-          console.error('Audio playback error:', error);
-        });
-      }
-    }
+    // Handle audio and vibration asynchronously to avoid blocking UI
+    if (soundEnabled || vibrationEnabled) {
+      // Use setTimeout to defer audio/vibration to next tick
+      setTimeout(() => {
+        // Handle sound
+        if (soundEnabled && popSoundRef.current && audioInitialized) {
+          popSoundRef.current.currentTime = 0;
+          popSoundRef.current.play().catch(console.error);
+        }
 
-    if (
-      vibrationEnabled &&
-      'vibrate' in navigator &&
-      /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
-    ) {
-      navigator.vibrate(40);
+        // Handle vibration
+        if (vibrationEnabled) {
+          if (isIOSRef.current && audioContextRef.current) {
+            // Optimized iOS haptic feedback - reuse existing audio context
+            try {
+              const oscillator = audioContextRef.current.createOscillator();
+              const gainNode = audioContextRef.current.createGain();
+              
+              oscillator.connect(gainNode);
+              gainNode.connect(audioContextRef.current.destination);
+              
+              oscillator.frequency.value = 200;
+              gainNode.gain.setValueAtTime(0, audioContextRef.current.currentTime);
+              gainNode.gain.linearRampToValueAtTime(0.05, audioContextRef.current.currentTime + 0.01);
+              gainNode.gain.exponentialRampToValueAtTime(0.001, audioContextRef.current.currentTime + 0.03);
+              
+              oscillator.start(audioContextRef.current.currentTime);
+              oscillator.stop(audioContextRef.current.currentTime + 0.03);
+            } catch (error) {
+              // Silently fail for haptic feedback
+            }
+          } else if ('vibrate' in navigator) {
+            // Android and other devices
+            navigator.vibrate(40);
+          }
+        }
+      }, 0);
     }
   };
 
@@ -150,7 +201,9 @@ const BubbleWrapFidget = () => {
           className={`toggle-btn${soundEnabled ? ' active' : ''}`}
           aria-label={soundEnabled ? 'Disable pop sound' : 'Enable pop sound'}
           onClick={() => {
-            initAudio(); // Initialize audio on first click
+            if (!audioInitialized) {
+              initAudio(); // Initialize audio on first click
+            }
             setSoundEnabled((v) => !v);
           }}
           type="button"
