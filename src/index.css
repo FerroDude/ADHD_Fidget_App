@@ -198,6 +198,48 @@ main {
   flex-direction: column;
 }
 
+/* Desktop layout with side navigation */
+@media (min-width: 769px) {
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .fidget-selection {
+    flex-direction: column;
+    position: fixed;
+    left: max(2rem, calc(50% - 600px - 220px));
+    top: 50%;
+    transform: translateY(-50%);
+    gap: 1rem;
+    margin-bottom: 0;
+    width: 200px;
+    z-index: 10;
+  }
+  
+  .focused-fidget {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .fidget-icon {
+    width: 100%;
+    height: 60px;
+    justify-content: flex-start;
+    padding-left: 1rem;
+    border-radius: 8px;
+  }
+  
+  .fidget-icon:hover {
+    transform: translateX(5px);
+  }
+}
+
 .app-description {
   background-color: var(--secondary-bg);
   padding: 1.5rem;
@@ -210,13 +252,14 @@ main {
   justify-content: center;
   align-items: center;
   position: relative;
-  padding: 1rem 0;
-  margin-bottom: 2rem;
+  padding: 0.5rem 0;
+  margin-bottom: 1rem;
 }
 
 .app-header h1 {
   text-align: center;
   margin: 0;
+  font-size: 2rem;
 }
 
 .app-header h2 {
@@ -224,8 +267,8 @@ main {
   margin: 0;
   font-weight: 400;
   font-style: italic;
-  padding-top: 0.5rem;
-  font-size: 1.15rem;
+  padding-top: 0.25rem;
+  font-size: 1rem;
   color: var(--text);
 }
 
@@ -234,23 +277,24 @@ main {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .fidget-icon {
   background-color: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.25rem;
-  width: 100px;
-  height: 100px;
+  border-radius: 8px;
+  padding: 0.75rem;
+  width: 70px;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 6px var(--shadow);
-  font-size: 1.2rem;
+  box-shadow: 0 2px 4px var(--shadow);
+  font-size: 1rem;
   font-weight: 500;
 }
 
@@ -275,43 +319,53 @@ main {
 @media (max-width: 768px) {
   .app-container {
     padding: 1.5rem;
-    padding-bottom: 3rem; /* Extra space at bottom for mobile */
-    min-height: 100vh; /* Fallback for older browsers */
-    min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
+    padding-bottom: 2rem;
+    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
   }
 
+  .app-header {
+    padding: 0.25rem 0;
+    margin-bottom: 0.75rem;
+  }
+  
+  .app-header h1 {
+    font-size: 1.75rem;
+  }
+  
+  .app-header h2 {
+    font-size: 0.9rem;
+  }
+
   .fidget-selection {
-    gap: 0.5rem; /* Tighter spacing on mobile */
-    margin-bottom: 1rem;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
   }
 
   .fidget-icon {
-    padding: 0.75rem;
-    width: 60px; /* Smaller width */
-    height: 60px; /* Smaller height */
-    font-size: 1rem;
+    padding: 0.5rem;
+    width: 50px;
+    height: 50px;
+    font-size: 0.9rem;
   }
 
-  /* Make active fidget slightly larger for better visibility */
   .fidget-icon.active {
-    width: 70px;
-    height: 70px;
-    border-width: 3px;
+    width: 55px;
+    height: 55px;
+    border-width: 2px;
   }
 
-  /* Optimize the focused fidget for mobile */
   .focused-fidget {
     padding: 1rem;
-    padding-bottom: 2rem; /* Extra bottom padding for mobile */
-    min-height: 350px; /* Allow a bit more space */
-    flex: 1; /* Allow it to grow to fill available space */
+    padding-bottom: 1.5rem;
+    min-height: 300px;
+    flex: 1;
   }
 
-  /* Make the placeholder fidget fill more of the screen */
   .placeholder-fidget-container {
-    max-width: 100%; /* Allow it to fill the container */
+    max-width: 100%;
   }
 }
 
@@ -319,27 +373,46 @@ main {
 @media (max-width: 480px) {
   .app-container {
     padding: 1rem;
-    padding-bottom: 2.5rem; /* Extra space at bottom for small mobile */
-    min-height: 100vh; /* Ensure full viewport height on mobile */
-    min-height: 100dvh; /* Use dynamic viewport height for better mobile support */
+    padding-bottom: 2rem;
+    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
   }
 
+  .app-header {
+    padding: 0.25rem 0;
+    margin-bottom: 0.5rem;
+  }
+  
+  .app-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .app-header h2 {
+    font-size: 0.85rem;
+  }
+
+  .fidget-selection {
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+  }
+
   .fidget-icon {
-    width: 50px; /* Even smaller on very small screens */
-    height: 50px;
-    padding: 0.5rem;
+    width: 45px;
+    height: 45px;
+    padding: 0.4rem;
+    font-size: 0.8rem;
   }
 
   .fidget-icon.active {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
   }
 
   .focused-fidget {
     padding: 0.75rem;
-    padding-bottom: 1.5rem; /* Extra bottom padding for small mobile */
-    flex: 1; /* Allow it to grow to fill available space */
+    padding-bottom: 1.25rem;
+    flex: 1;
   }
 }
